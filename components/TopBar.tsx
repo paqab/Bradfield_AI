@@ -13,7 +13,7 @@ export default function TopBar({ region, onRegionChange }: TopBarProps) {
 
   return (
     <View style={styles.topBar}>
-      <Text style={styles.title}>Urban Insight Platform</Text>
+      <Text style={styles.title}>Urban Planning AI powered by Antarctic Iceberg Institute</Text>
 
       <View style={styles.rightSection}>
         <View style={styles.searchContainer}>
