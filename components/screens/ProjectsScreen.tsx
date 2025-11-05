@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import DecorativeBg from '@/components/DecorativeBg';
 const PLACEHOLDER = require('../../assets/bradfield.png');
 import { Building2, MapPin, User, DollarSign, TrendingUp, Calendar, FileText, CheckCircle, Clock, XCircle } from 'lucide-react-native';
 import { generateProjects, Project, ProjectCategory, getCategoryColor, getCategoryTextColor, getStatusLabel, getStatusColor } from '@/utils/mockProjects';
@@ -35,6 +36,7 @@ export default function ProjectsScreen() {
 
   return (
     <ScrollView style={styles.container}>
+      <DecorativeBg scale={1.4} />
       <View style={styles.header}>
         <Text style={styles.title}>Projects</Text>
         <Text style={styles.subtitle}>Review and track development proposals</Text>
@@ -256,6 +258,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: THEME.background,
+    position: 'relative',
   },
   header: {
     padding: 32,

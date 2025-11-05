@@ -3,6 +3,7 @@ import { MessageSquare, TrendingUp, MapPin, Clock, Heart, MessageCircle, Share2,
 import { useState } from 'react';
 import InsightCard from '@/components/InsightCard';
 import CommunityChart from '@/components/CommunityChart';
+import DecorativeBg from '@/components/DecorativeBg';
 import THEME from '@/constants/theme';
 import { FONT_FAMILY } from '@/constants/fonts';
 
@@ -102,6 +103,7 @@ export default function CommunityScreen() {
 
   return (
     <ScrollView style={styles.container}>
+      <DecorativeBg scale={1.4} />
       <View style={styles.header}>
         <Text style={styles.title}>Community Feedback</Text>
         <Text style={styles.subtitle}>Real-time sentiment analysis and engagement metrics</Text>
@@ -212,6 +214,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: THEME.background,
+    position: 'relative',
   },
   header: {
     padding: 32,

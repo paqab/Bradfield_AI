@@ -3,6 +3,7 @@ import { Sparkles, Target, ChevronRight, Building2 } from 'lucide-react-native';
 import InsightCard from '@/components/InsightCard';
 import OptimisationChart from '@/components/OptimisationChart';
 import ScenarioPredictionChart from '@/components/ScenarioPredictionChart';
+import DecorativeBg from '@/components/DecorativeBg';
 import { generateProjects } from '@/utils/mockProjects';
 import { getScenarioProjects, generateScenarioPredictions } from '@/utils/scenarioData';
 import { FONT_FAMILY } from '@/constants/fonts';
@@ -60,6 +61,7 @@ export default function OptimisationScreen() {
 
   return (
     <ScrollView style={styles.container}>
+      <DecorativeBg scale={1.4} />
       <View style={styles.header}>
         <Text style={styles.title}>Optimisation Scenarios</Text>
         <Text style={styles.subtitle}>AI-generated planning alternatives with multi-objective analysis</Text>
@@ -186,6 +188,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: THEME.background,
+    position: 'relative',
   },
   header: {
     padding: 32,

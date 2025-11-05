@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
+import { RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { generateOptimisationData } from '@/utils/mockData';
 import THEME from '@/constants/theme';
 
@@ -7,89 +7,91 @@ interface OptimisationChartProps {
   summary?: string;
 }
 
-const COLORS = ['#87CEEB', '#4682B4', '#5F9EA0', '#20B2AA', '#00CED1', '#1E90FF'];
+// expanded palette includes yellows and reds for visual diversity
+const COLORS = [
+  THEME.accentPurple,
+  THEME.accentBlue,
+  THEME.accentPop,
+  THEME.warning || '#ffd166',
+  THEME.danger || '#ff6b6b',
+];
 
 export default function OptimisationChart({ summary }: OptimisationChartProps) {
-  const data = generateOptimisationData();
+  const raw = generateOptimisationData();
+
+  // Normalize metrics into 0-100 scores for radar chart and add ROI
+  const maxCost = Math.max(...raw.map((r) => r.cost));
+  const maxImpact = Math.max(...raw.map((r) => r.impact));
+  const rois = raw.map((r) => (r.cost > 0 ? (r.impact / r.cost) * 100 : 0));
+  const maxROI = Math.max(...rois, 1);
+
+  const radarMetrics = ['Efficiency', 'Impact', 'Cost', 'ROI'];
+
+  // scale plotted metrics down so each scenario occupies ~60-70% of the chart
+  const SCALE_FACTOR = 0.65
+
+  const radarData = radarMetrics.map((metric) => {
+    const obj: any = { metric };
+    raw.forEach((r) => {
+      if (metric === 'Efficiency') {
+        // efficiency in mockData is already a 0-100 style number
+        obj[r.scenario] = Math.round(Math.max(0, Math.min(100, r.efficiency)) * SCALE_FACTOR);
+      } else if (metric === 'Impact') {
+        obj[r.scenario] = Math.round(((r.impact / maxImpact) * 100) * SCALE_FACTOR);
+      } else if (metric === 'Cost') {
+        // invert cost so lower cost => higher score
+        obj[r.scenario] = Math.round((((maxCost - r.cost) / maxCost) * 100) * SCALE_FACTOR);
+      } else if (metric === 'ROI') {
+        const roi = r.cost > 0 ? (r.impact / r.cost) * 100 : 0;
+        obj[r.scenario] = Math.round(((roi / maxROI) * 100) * SCALE_FACTOR);
+      }
+    });
+    return obj;
+  });
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
-      const data = payload[0].payload;
+      const pts = payload[0].payload;
       return (
         <View style={styles.tooltipContainer}>
-          <Text style={styles.tooltipTitle}>Scenario {data.scenario}</Text>
-          <View style={styles.tooltipRow}>
-            <Text style={styles.tooltipLabel}>Cost:</Text>
-            <Text style={styles.tooltipValue}>${data.cost.toLocaleString()}</Text>
-          </View>
-          <View style={styles.tooltipRow}>
-            <Text style={styles.tooltipLabel}>Impact:</Text>
-            <Text style={styles.tooltipValue}>{data.impact} units</Text>
-          </View>
-          <View style={styles.tooltipRow}>
-            <Text style={styles.tooltipLabel}>Efficiency:</Text>
-            <Text style={[styles.tooltipValue, styles.efficiencyHighlight]}>{data.efficiency}%</Text>
-          </View>
-          <View style={styles.tooltipRow}>
-            <Text style={styles.tooltipLabel}>ROI:</Text>
-            <Text style={styles.tooltipValue}>{((data.impact / data.cost) * 100).toFixed(2)}%</Text>
-          </View>
+          <Text style={styles.tooltipTitle}>{pts.metric}</Text>
+          {raw.map((r) => (
+            <View key={r.scenario} style={styles.tooltipRow}>
+              <Text style={styles.tooltipLabel}>Scenario {r.scenario}:</Text>
+              <Text style={styles.tooltipValue}>{pts[r.scenario]} / 100</Text>
+            </View>
+          ))}
         </View>
       );
     }
     return null;
   };
 
-  // Calculate optimal zone (high impact, reasonable cost)
-  const avgCost = data.reduce((sum, d) => sum + d.cost, 0) / data.length;
-  const avgImpact = data.reduce((sum, d) => sum + d.impact, 0) / data.length;
-
   return (
     <View style={styles.container}>
       <View style={styles.chartWrapper}>
-        <ResponsiveContainer width="100%" height={280}>
-          <ScatterChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={THEME.surfaceAlt} opacity={0.5} />
-            <XAxis
-              type="number"
-              dataKey="cost"
-              name="Cost ($)"
-              stroke={THEME.textSecondary}
-              style={{ fontSize: 11 }}
-              label={{ value: 'Cost ($)', position: 'insideBottom', offset: -5 }}
-              domain={['dataMin - 500', 'dataMax + 500']}
-            />
-            <YAxis
-              type="number"
-              dataKey="impact"
-              name="Impact (units)"
-              stroke={THEME.textSecondary}
-              style={{ fontSize: 11 }}
-              label={{ value: 'Impact (units)', angle: -90, position: 'insideLeft', offset: 10 }}
-              domain={['dataMin - 20', 'dataMax + 20']}
-            />
+        {/* slightly larger chart but plotted values are scaled down so areas don't dominate */}
+        <ResponsiveContainer width="100%" height={300}>
+          <RadarChart data={radarData} outerRadius="75%">
+            <PolarGrid stroke={THEME.surfaceAlt} />
+            <PolarAngleAxis dataKey="metric" tick={{ fill: THEME.textSecondary }} />
+            <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: THEME.textSecondary }} />
             <Tooltip content={<CustomTooltip />} />
-            <Legend 
-              wrapperStyle={{ fontSize: 11, paddingTop: 10 }} 
-              iconType="circle"
-            />
-            {/* Reference lines for optimal zone */}
-            <ReferenceLine x={avgCost} stroke={THEME.accentBlue} strokeDasharray="5 5" opacity={0.5} />
-            <ReferenceLine y={avgImpact} stroke={THEME.accentBlue} strokeDasharray="5 5" opacity={0.5} />
-            <Scatter
-              name="Optimisation Scenarios"
-              data={data}
-              fill={THEME.accentBlue}
-            >
-              {data.map((entry, index) => (
-                <Cell 
-                  key={`cell-${index}`} 
-                  fill={COLORS[index % COLORS.length]}
-                  r={entry.efficiency > 88 ? 8 : 6}
-                />
-              ))}
-            </Scatter>
-          </ScatterChart>
+            <Legend verticalAlign="bottom" iconType="circle" />
+            {raw.map((r, i) => (
+              <Radar
+                key={r.scenario}
+                name={`Scenario ${r.scenario}`}
+                dataKey={r.scenario}
+                stroke={COLORS[i % COLORS.length]}
+                fill={COLORS[i % COLORS.length]}
+                fillOpacity={0.3}
+                strokeWidth={2.5}
+                isAnimationActive={true}
+                animationDuration={900 + i * 220}
+              />
+            ))}
+          </RadarChart>
         </ResponsiveContainer>
       </View>
 
@@ -99,25 +101,25 @@ export default function OptimisationChart({ summary }: OptimisationChartProps) {
           <Text style={styles.legendSubtitle}>Click points for detailed metrics</Text>
         </View>
         <View style={styles.scenarioList}>
-          {data.map((scenario, index) => (
-            <View key={scenario.scenario} style={[styles.scenarioItem, scenario.efficiency > 88 && styles.optimalItem]}>
+          {raw.map((scenarioRaw, index) => (
+            <View key={scenarioRaw.scenario} style={[styles.scenarioItem, scenarioRaw.efficiency > 88 && styles.optimalItem]}>
               <View style={[styles.colorIndicator, { backgroundColor: COLORS[index % COLORS.length] }]} />
               <View style={styles.scenarioInfo}>
                 <View style={styles.scenarioHeader}>
-                  <Text style={styles.scenarioLabel}>Scenario {scenario.scenario}</Text>
-                  {scenario.efficiency > 88 && (
+                  <Text style={styles.scenarioLabel}>Scenario {scenarioRaw.scenario}</Text>
+                  {scenarioRaw.efficiency > 88 && (
                     <View style={styles.optimalBadge}>
                       <Text style={styles.optimalBadgeText}>OPTIMAL</Text>
                     </View>
                   )}
                 </View>
                 <View style={styles.metricsRow}>
-                  <Text style={styles.metricText}>Efficiency: <Text style={styles.metricValue}>{scenario.efficiency}%</Text></Text>
-                  <Text style={styles.metricText}>ROI: <Text style={styles.metricValue}>{((scenario.impact / scenario.cost) * 100).toFixed(1)}%</Text></Text>
+                  <Text style={styles.metricText}>Efficiency: <Text style={styles.metricValue}>{scenarioRaw.efficiency}%</Text></Text>
+                  <Text style={styles.metricText}>ROI: <Text style={styles.metricValue}>{((scenarioRaw.impact / scenarioRaw.cost) * 100).toFixed(1)}%</Text></Text>
                 </View>
                 <View style={styles.metricsRow}>
-                  <Text style={styles.metricTextSmall}>Cost: ${scenario.cost.toLocaleString()}</Text>
-                  <Text style={styles.metricTextSmall}>Impact: {scenario.impact} units</Text>
+                  <Text style={styles.metricTextSmall}>Cost: ${scenarioRaw.cost.toLocaleString()}</Text>
+                  <Text style={styles.metricTextSmall}>Impact: {scenarioRaw.impact} units</Text>
                 </View>
               </View>
             </View>
@@ -144,8 +146,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   chartWrapper: {
-    height: 280,
-    marginBottom: 20,
+    height: 320,
+    marginBottom: 16,
   },
   tooltipContainer: {
     backgroundColor: THEME.surface,

@@ -5,6 +5,7 @@ import InsightCard from '@/components/InsightCard';
 import CommunityChart from '@/components/CommunityChart';
 import EnhancedHousingChart from '@/components/EnhancedHousingChart';
 import OptimisationChart from '@/components/OptimisationChart';
+import DecorativeBg from '@/components/DecorativeBg';
 import { generateAISummaries } from '@/utils/mockData';
 import { generateProjects } from '@/utils/mockProjects';
 import { FONT_FAMILY } from '@/constants/fonts';
@@ -35,6 +36,8 @@ export default function OverviewScreen({ region }: OverviewScreenProps) {
 
   return (
     <ScrollView style={styles.container}>
+      <DecorativeBg scale={1.4} />
+
       <View style={styles.header}>
         <View>
           <Text style={styles.title}>Dashboard Overview</Text>
@@ -148,6 +151,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0b1226',
+    position: 'relative',
   },
   header: {
     flexDirection: 'row',
@@ -285,4 +289,5 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY.semiBold,
     color: '#6E57FF',
   },
+  
 });

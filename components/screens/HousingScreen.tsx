@@ -4,6 +4,7 @@ import InsightCard from '@/components/InsightCard';
 import HousingChart from '@/components/HousingChart';
 import HousingScatterChart from '@/components/HousingScatterChart';
 import { generateHousingScatterData } from '@/utils/housingData';
+import DecorativeBg from '@/components/DecorativeBg';
 import { FONT_FAMILY } from '@/constants/fonts';
 import THEME from '@/constants/theme';
 
@@ -17,6 +18,7 @@ export default function HousingScreen() {
 
   return (
     <ScrollView style={styles.container}>
+      <DecorativeBg scale={1.4} />
       <View style={styles.header}>
         <Text style={styles.title}>Predictive Housing</Text>
         <Text style={styles.subtitle}>AI-driven demand forecasting and supply analysis</Text>
@@ -97,6 +99,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: THEME.background,
+    position: 'relative',
   },
   header: {
     padding: 32,
