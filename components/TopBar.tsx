@@ -1,5 +1,6 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Search, User } from 'lucide-react-native';
+import { FONT_FAMILY } from '@/constants/fonts';
 
 interface TopBarProps {
   region: string;
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
+    fontFamily: FONT_FAMILY.bold,
     color: '#000000',
   },
   rightSection: {
@@ -74,6 +76,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 14,
+    fontFamily: FONT_FAMILY.regular,
     color: '#000000',
   },
   regionSelector: {
@@ -85,6 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666666',
     fontWeight: '500',
+    fontFamily: FONT_FAMILY.medium,
   },
   dropdown: {
     backgroundColor: '#F5F5DC',
@@ -98,6 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000000',
     fontWeight: '500',
+    fontFamily: FONT_FAMILY.medium,
   },
   profileButton: {
     width: 40,

@@ -1,9 +1,14 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { Sparkles, Target, ChevronRight } from 'lucide-react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { Sparkles, Target, ChevronRight, Building2 } from 'lucide-react-native';
 import InsightCard from '@/components/InsightCard';
 import OptimisationChart from '@/components/OptimisationChart';
+import ScenarioPredictionChart from '@/components/ScenarioPredictionChart';
+import { generateProjects } from '@/utils/mockProjects';
+import { getScenarioProjects, generateScenarioPredictions } from '@/utils/scenarioData';
+import { FONT_FAMILY } from '@/constants/fonts';
 
 export default function OptimisationScreen() {
+  const allProjects = generateProjects();
   const scenarios = [
     {
       id: 'A',
@@ -118,6 +123,50 @@ export default function OptimisationScreen() {
 
               <View style={styles.recommendationSection}>
                 <Text style={styles.recommendationText}>{scenario.recommendation}</Text>
+              </View>
+
+              {/* Prediction Chart */}
+              <View style={styles.predictionSection}>
+                <Text style={styles.predictionTitle}>24-Month Outcome Predictions</Text>
+                <ScenarioPredictionChart 
+                  scenarioId={scenario.id}
+                  data={generateScenarioPredictions(scenario.id)}
+                />
+              </View>
+
+              {/* Related Projects */}
+              <View style={styles.projectsSection}>
+                <View style={styles.projectsHeader}>
+                  <Building2 size={16} color="#666666" />
+                  <Text style={styles.projectsTitle}>Related Projects</Text>
+                </View>
+                <View style={styles.projectsList}>
+                  {getScenarioProjects(scenario.id, allProjects).map((project) => (
+                    <TouchableOpacity key={project.id} style={styles.projectItem}>
+                      {project.images && project.images.length > 0 && (
+                        <Image
+                          source={project.images[0]}
+                          style={styles.projectItemImage}
+                          resizeMode="cover"
+                        />
+                      )}
+                      <View style={styles.projectItemContent}>
+                        <Text style={styles.projectItemTitle} numberOfLines={1}>
+                          {project.title}
+                        </Text>
+                        <Text style={styles.projectItemLocation}>{project.location}</Text>
+                        <View style={styles.projectItemMeta}>
+                          <Text style={styles.projectItemStatus}>
+                            {project.status === 'under_review' ? 'Under Review' : project.status === 'approved' ? 'Approved' : project.status === 'in_development' ? 'In Development' : 'Completed'}
+                          </Text>
+                          <Text style={styles.projectItemCost}>
+                            ${(project.estimatedCost / 1000000).toFixed(1)}M
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </View>
               </View>
 
               <TouchableOpacity style={styles.detailsButton}>
@@ -312,5 +361,84 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: '#87CEEB',
+  },
+  predictionSection: {
+    marginTop: 20,
+    marginBottom: 20,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E5E5',
+  },
+  predictionTitle: {
+    fontSize: 14,
+    fontFamily: FONT_FAMILY.semiBold,
+    color: '#000000',
+    marginBottom: 16,
+  },
+  projectsSection: {
+    marginTop: 20,
+    marginBottom: 20,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E5E5',
+  },
+  projectsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 16,
+  },
+  projectsTitle: {
+    fontSize: 14,
+    fontFamily: FONT_FAMILY.semiBold,
+    color: '#000000',
+  },
+  projectsList: {
+    gap: 12,
+  },
+  projectItem: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+  },
+  projectItemImage: {
+    width: 80,
+    height: 80,
+    backgroundColor: '#E5E5E5',
+  },
+  projectItemContent: {
+    flex: 1,
+    padding: 12,
+    justifyContent: 'space-between',
+  },
+  projectItemTitle: {
+    fontSize: 13,
+    fontFamily: FONT_FAMILY.semiBold,
+    color: '#000000',
+    marginBottom: 4,
+  },
+  projectItemLocation: {
+    fontSize: 11,
+    fontFamily: FONT_FAMILY.regular,
+    color: '#666666',
+    marginBottom: 6,
+  },
+  projectItemMeta: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  projectItemStatus: {
+    fontSize: 10,
+    fontFamily: FONT_FAMILY.medium,
+    color: '#666666',
+  },
+  projectItemCost: {
+    fontSize: 11,
+    fontFamily: FONT_FAMILY.semiBold,
+    color: '#000000',
   },
 });

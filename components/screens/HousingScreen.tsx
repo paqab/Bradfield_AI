@@ -2,6 +2,9 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Home, TrendingUp, Building2 } from 'lucide-react-native';
 import InsightCard from '@/components/InsightCard';
 import HousingChart from '@/components/HousingChart';
+import HousingScatterChart from '@/components/HousingScatterChart';
+import { generateHousingScatterData } from '@/utils/housingData';
+import { FONT_FAMILY } from '@/constants/fonts';
 
 export default function HousingScreen() {
   const predictions = [
@@ -25,6 +28,15 @@ export default function HousingScreen() {
             icon={<TrendingUp size={20} color="#87CEEB" />}
           >
             <HousingChart summary="Housing demand outpacing supply growth by 4% on average. Targeted interventions recommended for coastal and metro zones." />
+          </InsightCard>
+        </View>
+
+        <View style={styles.chartSection}>
+          <InsightCard
+            title="Zone Market Analysis"
+            icon={<TrendingUp size={20} color="#87CEEB" />}
+          >
+            <HousingScatterChart data={generateHousingScatterData()} />
           </InsightCard>
         </View>
 
@@ -92,11 +104,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
+    fontFamily: FONT_FAMILY.bold,
     color: '#000000',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
+    fontFamily: FONT_FAMILY.regular,
     color: '#666666',
   },
   content: {
@@ -122,6 +136,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
+    fontFamily: FONT_FAMILY.bold,
     color: '#000000',
   },
   predictionGrid: {
@@ -146,6 +161,7 @@ const styles = StyleSheet.create({
   zoneName: {
     fontSize: 16,
     fontWeight: '700',
+    fontFamily: FONT_FAMILY.bold,
     color: '#000000',
   },
   metrics: {
@@ -159,11 +175,13 @@ const styles = StyleSheet.create({
   },
   metricLabel: {
     fontSize: 13,
+    fontFamily: FONT_FAMILY.regular,
     color: '#666666',
   },
   metricValue: {
     fontSize: 15,
     fontWeight: '700',
+    fontFamily: FONT_FAMILY.bold,
   },
   demandValue: {
     color: '#87CEEB',
@@ -186,6 +204,7 @@ const styles = StyleSheet.create({
   statusText: {
     fontSize: 12,
     fontWeight: '600',
+    fontFamily: FONT_FAMILY.semiBold,
     color: '#000000',
   },
   criticalBadge: {

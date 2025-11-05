@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { ReactNode } from 'react';
+import { FONT_FAMILY } from '@/constants/fonts';
 
 interface InsightCardProps {
   title: string;
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '700',
+    fontFamily: FONT_FAMILY.bold,
     color: '#000000',
   },
   content: {
@@ -67,6 +69,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 14,
+    fontFamily: FONT_FAMILY.regular,
     color: '#666666',
     fontStyle: 'italic',
   },

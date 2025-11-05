@@ -1,6 +1,8 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { LayoutDashboard, Users, Home, Sparkles } from 'lucide-react-native';
+import { LayoutDashboard, Users, Home, Sparkles, FolderKanban } from 'lucide-react-native';
 import { NavigationSection } from '@/types/navigation';
+import BradfieldLogo from '@/components/BradfieldLogo';
+import { FONT_FAMILY } from '@/constants/fonts';
 
 interface SidebarProps {
   activeSection: NavigationSection;
@@ -13,12 +15,13 @@ export default function Sidebar({ activeSection, onSectionChange }: SidebarProps
     { id: 'community' as NavigationSection, label: 'Community Feedback', icon: Users },
     { id: 'housing' as NavigationSection, label: 'Predictive Housing', icon: Home },
     { id: 'optimisation' as NavigationSection, label: 'Optimisation', icon: Sparkles },
+    { id: 'projects' as NavigationSection, label: 'Projects', icon: FolderKanban },
   ];
 
   return (
     <View style={styles.sidebar}>
       <View style={styles.header}>
-        <Text style={styles.logo}>Bradfield AI</Text>
+        <BradfieldLogo size={100} />
         <Text style={styles.subtitle}>Urban Planning Platform</Text>
       </View>
 
@@ -65,17 +68,15 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 40,
-  },
-  logo: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#FFFFFF',
-    marginBottom: 4,
+    alignItems: 'center',
   },
   subtitle: {
     fontSize: 12,
     color: '#A0A0A0',
     fontWeight: '400',
+    fontFamily: FONT_FAMILY.regular,
+    marginTop: 12,
+    textAlign: 'center',
   },
   nav: {
     flex: 1,
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#D3D3D3',
     fontWeight: '500',
+    fontFamily: FONT_FAMILY.medium,
   },
   navTextActive: {
     color: '#87CEEB',
@@ -112,6 +114,7 @@ const styles = StyleSheet.create({
   placeholderTitle: {
     fontSize: 12,
     fontWeight: '600',
+    fontFamily: FONT_FAMILY.semiBold,
     color: '#666666',
     marginBottom: 12,
     textTransform: 'uppercase',
@@ -119,6 +122,7 @@ const styles = StyleSheet.create({
   },
   placeholderItem: {
     fontSize: 13,
+    fontFamily: FONT_FAMILY.regular,
     color: '#555555',
     marginBottom: 8,
   },

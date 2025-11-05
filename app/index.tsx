@@ -6,6 +6,7 @@ import OverviewScreen from '@/components/screens/OverviewScreen';
 import CommunityScreen from '@/components/screens/CommunityScreen';
 import HousingScreen from '@/components/screens/HousingScreen';
 import OptimisationScreen from '@/components/screens/OptimisationScreen';
+import ProjectsScreen from '@/components/screens/ProjectsScreen';
 import { NavigationSection } from '@/types/navigation';
 
 export default function Index() {
@@ -22,6 +23,8 @@ export default function Index() {
         return <HousingScreen />;
       case 'optimisation':
         return <OptimisationScreen />;
+      case 'projects':
+        return <ProjectsScreen />;
       default:
         return <OverviewScreen region={region} />;
     }

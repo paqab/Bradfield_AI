@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { Users, Home, Sparkles, Zap } from 'lucide-react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Users, Home, Sparkles, Zap, FolderKanban, ArrowRight } from 'lucide-react-native';
 import InsightCard from '@/components/InsightCard';
 import CommunityChart from '@/components/CommunityChart';
-import HousingChart from '@/components/HousingChart';
+import EnhancedHousingChart from '@/components/EnhancedHousingChart';
 import OptimisationChart from '@/components/OptimisationChart';
 import { generateAISummaries } from '@/utils/mockData';
+import { generateProjects } from '@/utils/mockProjects';
+import { FONT_FAMILY } from '@/constants/fonts';
 
 interface OverviewScreenProps {
   region: string;
@@ -55,13 +57,13 @@ export default function OverviewScreen({ region }: OverviewScreenProps) {
           </InsightCard>
         </View>
 
-        <View style={styles.cardWrapper}>
+        <View style={styles.cardWrapperFull}>
           <InsightCard
             title="Housing Demand Forecast"
             icon={<Home size={20} color="#87CEEB" />}
             isGenerating={isGenerating}
           >
-            <HousingChart summary={summaries.housing} />
+            <EnhancedHousingChart summary={summaries.housing} />
           </InsightCard>
         </View>
 
@@ -72,6 +74,62 @@ export default function OverviewScreen({ region }: OverviewScreenProps) {
             isGenerating={isGenerating}
           >
             <OptimisationChart summary={summaries.optimisation} />
+          </InsightCard>
+        </View>
+
+        {/* Projects Section */}
+        <View style={styles.cardWrapperFull}>
+          <InsightCard
+            title="Active Projects"
+            icon={<FolderKanban size={20} color="#87CEEB" />}
+          >
+            <View style={styles.projectsSection}>
+              <Text style={styles.projectsSectionSubtitle}>
+                Recent development proposals under review
+              </Text>
+              <View style={styles.projectsGrid}>
+                {generateProjects()
+                  .filter(p => p.status !== 'completed')
+                  .slice(0, 3)
+                  .map((project) => (
+                    <TouchableOpacity key={project.id} style={styles.projectCard}>
+                      {project.images && project.images.length > 0 && (
+                        <Image
+                          source={project.images[0]}
+                          style={styles.projectImage}
+                          resizeMode="cover"
+                        />
+                      )}
+                      <View style={styles.projectCardContent}>
+                        <Text style={styles.projectCardTitle} numberOfLines={2}>
+                          {project.title}
+                        </Text>
+                        <Text style={styles.projectCardLocation}>{project.location}</Text>
+                        <View style={styles.projectCardFooter}>
+                          <View style={styles.projectCardStatus}>
+                            <View 
+                              style={[
+                                styles.projectStatusDot,
+                                { backgroundColor: project.status === 'approved' ? '#4CAF50' : project.status === 'in_development' ? '#2196F3' : '#FFC107' }
+                              ]} 
+                            />
+                            <Text style={styles.projectCardStatusText}>
+                              {project.status === 'under_review' ? 'Under Review' : project.status === 'approved' ? 'Approved' : 'In Development'}
+                            </Text>
+                          </View>
+                          <Text style={styles.projectCardCost}>
+                            ${(project.estimatedCost / 1000000).toFixed(1)}M
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+              </View>
+              <TouchableOpacity style={styles.viewAllButton}>
+                <Text style={styles.viewAllButtonText}>View All Projects</Text>
+                <ArrowRight size={16} color="#87CEEB" />
+              </TouchableOpacity>
+            </View>
           </InsightCard>
         </View>
       </View>
@@ -94,11 +152,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
+    fontFamily: FONT_FAMILY.bold,
     color: '#000000',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
+    fontFamily: FONT_FAMILY.regular,
     color: '#666666',
   },
   generateButton: {
@@ -113,6 +173,7 @@ const styles = StyleSheet.create({
   generateButtonText: {
     fontSize: 15,
     fontWeight: '600',
+    fontFamily: FONT_FAMILY.semiBold,
     color: '#000000',
   },
   grid: {
@@ -127,5 +188,87 @@ const styles = StyleSheet.create({
   },
   cardWrapperFull: {
     width: '100%',
+  },
+  projectsSection: {
+    minHeight: 200,
+  },
+  projectsSectionSubtitle: {
+    fontSize: 13,
+    fontFamily: FONT_FAMILY.regular,
+    color: '#666666',
+    marginBottom: 20,
+  },
+  projectsGrid: {
+    flexDirection: 'row',
+    gap: 16,
+    marginBottom: 20,
+  },
+  projectCard: {
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+  },
+  projectImage: {
+    width: '100%',
+    height: 120,
+    backgroundColor: '#E5E5E5',
+  },
+  projectCardContent: {
+    padding: 12,
+  },
+  projectCardTitle: {
+    fontSize: 14,
+    fontFamily: FONT_FAMILY.semiBold,
+    color: '#000000',
+    marginBottom: 4,
+    minHeight: 36,
+  },
+  projectCardLocation: {
+    fontSize: 12,
+    fontFamily: FONT_FAMILY.regular,
+    color: '#666666',
+    marginBottom: 8,
+  },
+  projectCardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  projectCardStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  projectStatusDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  projectCardStatusText: {
+    fontSize: 11,
+    fontFamily: FONT_FAMILY.medium,
+    color: '#666666',
+  },
+  projectCardCost: {
+    fontSize: 12,
+    fontFamily: FONT_FAMILY.semiBold,
+    color: '#000000',
+  },
+  viewAllButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E5E5',
+  },
+  viewAllButtonText: {
+    fontSize: 14,
+    fontFamily: FONT_FAMILY.semiBold,
+    color: '#87CEEB',
   },
 });
