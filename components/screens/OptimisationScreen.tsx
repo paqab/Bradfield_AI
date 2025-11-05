@@ -6,6 +6,7 @@ import ScenarioPredictionChart from '@/components/ScenarioPredictionChart';
 import { generateProjects } from '@/utils/mockProjects';
 import { getScenarioProjects, generateScenarioPredictions } from '@/utils/scenarioData';
 import { FONT_FAMILY } from '@/constants/fonts';
+import THEME from '@/constants/theme';
 
 export default function OptimisationScreen() {
   const allProjects = generateProjects();
@@ -68,7 +69,7 @@ export default function OptimisationScreen() {
         <View style={styles.chartSection}>
           <InsightCard
             title="Scenario Performance Matrix"
-            icon={<Target size={20} color="#87CEEB" />}
+            icon={<Target size={20} color={THEME.accentBlue} />}
           >
             <OptimisationChart summary="Scenario E delivers optimal outcomes: 92% efficiency with balanced cost-impact ratio. Transit-oriented approach maximises accessibility and equity." />
           </InsightCard>
@@ -76,7 +77,7 @@ export default function OptimisationScreen() {
 
         <View style={styles.scenariosSection}>
           <View style={styles.sectionHeader}>
-            <Sparkles size={20} color="#000000" />
+            <Sparkles size={20} color={THEME.textPrimary} />
             <Text style={styles.sectionTitle}>Detailed Scenario Analysis</Text>
           </View>
 
@@ -137,7 +138,7 @@ export default function OptimisationScreen() {
               {/* Related Projects */}
               <View style={styles.projectsSection}>
                 <View style={styles.projectsHeader}>
-                  <Building2 size={16} color="#666666" />
+                  <Building2 size={16} color={THEME.muted} />
                   <Text style={styles.projectsTitle}>Related Projects</Text>
                 </View>
                 <View style={styles.projectsList}>
@@ -171,7 +172,7 @@ export default function OptimisationScreen() {
 
               <TouchableOpacity style={styles.detailsButton}>
                 <Text style={styles.detailsButtonText}>View Full Analysis</Text>
-                <ChevronRight size={16} color="#87CEEB" />
+                <ChevronRight size={16} color={THEME.accentBlue} />
               </TouchableOpacity>
             </View>
           ))}
@@ -184,7 +185,7 @@ export default function OptimisationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.background,
   },
   header: {
     padding: 32,
@@ -193,12 +194,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   content: {
     paddingHorizontal: 32,
@@ -208,11 +209,11 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   scenariosSection: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     borderRadius: 12,
     padding: 24,
     borderWidth: 1,
-    borderColor: '#F0F0F0',
+    borderColor: THEME.surfaceAlt,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -223,15 +224,15 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   scenarioCard: {
     padding: 20,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     borderRadius: 8,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
   },
   scenarioHeader: {
     flexDirection: 'row',
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   scenarioBadge: {
-    backgroundColor: '#000000',
+    backgroundColor: THEME.surfaceAlt,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 4,
@@ -248,11 +249,11 @@ const styles = StyleSheet.create({
   scenarioBadgeText: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: THEME.textPrimary,
     letterSpacing: 1,
   },
   optimalBadge: {
-    backgroundColor: '#87CEEB',
+    backgroundColor: THEME.accentBlue,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 4,
@@ -260,13 +261,13 @@ const styles = StyleSheet.create({
   optimalText: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     letterSpacing: 1,
   },
   scenarioName: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 16,
   },
   scenarioMetrics: {
@@ -278,12 +279,12 @@ const styles = StyleSheet.create({
   metricLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#666666',
+    color: THEME.textSecondary,
     marginBottom: 6,
   },
   efficiencyBar: {
     height: 32,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: THEME.surfaceAlt,
     borderRadius: 6,
     overflow: 'hidden',
     position: 'relative',
@@ -294,12 +295,12 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     bottom: 0,
-    backgroundColor: '#87CEEB',
+    backgroundColor: THEME.accentBlue,
   },
   efficiencyText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     textAlign: 'center',
     zIndex: 1,
   },
@@ -313,41 +314,41 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 13,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   detailValue: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   impactSection: {
     marginBottom: 12,
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: THEME.surfaceAlt,
   },
   impactLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#666666',
+    color: THEME.textSecondary,
     marginBottom: 4,
   },
   impactText: {
     fontSize: 14,
-    color: '#333333',
+    color: THEME.textSecondary,
     lineHeight: 21,
   },
   recommendationSection: {
-    backgroundColor: '#FFF9E6',
+    backgroundColor: THEME.surfaceAlt,
     padding: 12,
     borderRadius: 6,
     marginBottom: 12,
     borderLeftWidth: 3,
-    borderLeftColor: '#F5F5DC',
+    borderLeftColor: THEME.accentPurple,
   },
   recommendationText: {
     fontSize: 13,
-    color: '#333333',
+    color: THEME.textSecondary,
     fontStyle: 'italic',
   },
   detailsButton: {
@@ -360,19 +361,19 @@ const styles = StyleSheet.create({
   detailsButtonText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#87CEEB',
+    color: THEME.accentBlue,
   },
   predictionSection: {
     marginTop: 20,
     marginBottom: 20,
     paddingTop: 20,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: THEME.surfaceAlt,
   },
   predictionTitle: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 16,
   },
   projectsSection: {
@@ -398,16 +399,16 @@ const styles = StyleSheet.create({
   },
   projectItem: {
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     borderRadius: 8,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
   },
   projectItemImage: {
     width: 80,
     height: 80,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: THEME.surfaceAlt,
   },
   projectItemContent: {
     flex: 1,
@@ -417,13 +418,13 @@ const styles = StyleSheet.create({
   projectItemTitle: {
     fontSize: 13,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 4,
   },
   projectItemLocation: {
     fontSize: 11,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
     marginBottom: 6,
   },
   projectItemMeta: {
@@ -434,11 +435,11 @@ const styles = StyleSheet.create({
   projectItemStatus: {
     fontSize: 10,
     fontFamily: FONT_FAMILY.medium,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   projectItemCost: {
     fontSize: 11,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
 });

@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { generateCommunityData } from '@/utils/mockData';
+import THEME from '@/constants/theme';
 
 interface CommunityChartProps {
   summary?: string;
@@ -23,9 +24,9 @@ export default function CommunityChart({ summary }: CommunityChartProps) {
   };
 
   const getSentimentColor = (positive: number) => {
-    if (positive >= 70) return '#4CAF50';
-    if (positive >= 50) return '#FFC107';
-    return '#F44336';
+    if (positive >= 70) return THEME.success;
+    if (positive >= 50) return THEME.warning;
+    return THEME.danger;
   };
 
   return (
@@ -119,12 +120,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   overviewCard: {
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     padding: 16,
     borderRadius: 12,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
   },
   overviewHeader: {
     flexDirection: 'row',
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   overviewTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   sentimentIndicator: {
     width: 60,
@@ -168,10 +169,10 @@ const styles = StyleSheet.create({
   barRowContainer: {
     marginBottom: 20,
     padding: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 2,
   },
   categorySubtext: {
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
   },
   barPositive: {
     alignItems: 'center',
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
     minWidth: 40,
   },
   barNegative: {
-    backgroundColor: '#D3D3D3',
+    backgroundColor: THEME.surfaceAlt,
     alignItems: 'center',
     justifyContent: 'center',
     minWidth: 40,
@@ -234,51 +235,51 @@ const styles = StyleSheet.create({
   barTextPositive: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: THEME.textPrimary,
   },
   barTextNegative: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textSecondary,
   },
   barMetrics: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: THEME.surfaceAlt,
   },
   metricItem: {
     alignItems: 'center',
   },
   metricLabel: {
     fontSize: 11,
-    color: '#666666',
+    color: THEME.textSecondary,
     marginBottom: 4,
   },
   metricValue: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   metricValueNegative: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   summaryContainer: {
     marginTop: 16,
     padding: 16,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     borderRadius: 8,
     borderLeftWidth: 3,
-    borderLeftColor: '#87CEEB',
+    borderLeftColor: THEME.accentBlue,
   },
   summaryHeader: {
     marginBottom: 8,
   },
   aiTag: {
-    backgroundColor: '#87CEEB',
+    backgroundColor: THEME.accentBlue,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,
@@ -287,12 +288,12 @@ const styles = StyleSheet.create({
   aiTagText: {
     fontSize: 10,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     letterSpacing: 1,
   },
   summaryText: {
     fontSize: 14,
     lineHeight: 21,
-    color: '#333333',
+    color: THEME.textSecondary,
   },
 });

@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
 import { generateOptimisationData } from '@/utils/mockData';
+import THEME from '@/constants/theme';
 
 interface OptimisationChartProps {
   summary?: string;
@@ -48,12 +49,12 @@ export default function OptimisationChart({ summary }: OptimisationChartProps) {
       <View style={styles.chartWrapper}>
         <ResponsiveContainer width="100%" height={280}>
           <ScatterChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" opacity={0.5} />
+            <CartesianGrid strokeDasharray="3 3" stroke={THEME.surfaceAlt} opacity={0.5} />
             <XAxis
               type="number"
               dataKey="cost"
               name="Cost ($)"
-              stroke="#666666"
+              stroke={THEME.textSecondary}
               style={{ fontSize: 11 }}
               label={{ value: 'Cost ($)', position: 'insideBottom', offset: -5 }}
               domain={['dataMin - 500', 'dataMax + 500']}
@@ -62,7 +63,7 @@ export default function OptimisationChart({ summary }: OptimisationChartProps) {
               type="number"
               dataKey="impact"
               name="Impact (units)"
-              stroke="#666666"
+              stroke={THEME.textSecondary}
               style={{ fontSize: 11 }}
               label={{ value: 'Impact (units)', angle: -90, position: 'insideLeft', offset: 10 }}
               domain={['dataMin - 20', 'dataMax + 20']}
@@ -73,12 +74,12 @@ export default function OptimisationChart({ summary }: OptimisationChartProps) {
               iconType="circle"
             />
             {/* Reference lines for optimal zone */}
-            <ReferenceLine x={avgCost} stroke="#87CEEB" strokeDasharray="5 5" opacity={0.5} />
-            <ReferenceLine y={avgImpact} stroke="#87CEEB" strokeDasharray="5 5" opacity={0.5} />
+            <ReferenceLine x={avgCost} stroke={THEME.accentBlue} strokeDasharray="5 5" opacity={0.5} />
+            <ReferenceLine y={avgImpact} stroke={THEME.accentBlue} strokeDasharray="5 5" opacity={0.5} />
             <Scatter
               name="Optimisation Scenarios"
               data={data}
-              fill="#87CEEB"
+              fill={THEME.accentBlue}
             >
               {data.map((entry, index) => (
                 <Cell 
@@ -147,11 +148,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   tooltipContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
   tooltipTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 8,
   },
   tooltipRow: {
@@ -172,15 +173,15 @@ const styles = StyleSheet.create({
   },
   tooltipLabel: {
     fontSize: 12,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   tooltipValue: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   efficiencyHighlight: {
-    color: '#87CEEB',
+    color: THEME.accentBlue,
   },
   legendContainer: {
     marginBottom: 20,
@@ -191,12 +192,12 @@ const styles = StyleSheet.create({
   legendTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 2,
   },
   legendSubtitle: {
     fontSize: 11,
-    color: '#666666',
+    color: THEME.textSecondary,
     fontStyle: 'italic',
   },
   scenarioList: {
@@ -204,16 +205,16 @@ const styles = StyleSheet.create({
   },
   scenarioItem: {
     flexDirection: 'row',
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
     gap: 12,
   },
   optimalItem: {
-    backgroundColor: '#F0F8FF',
-    borderColor: '#87CEEB',
+    backgroundColor: THEME.surfaceAlt,
+    borderColor: THEME.accentBlue,
     borderWidth: 2,
   },
   colorIndicator: {
@@ -233,10 +234,10 @@ const styles = StyleSheet.create({
   scenarioLabel: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   optimalBadge: {
-    backgroundColor: '#87CEEB',
+    backgroundColor: THEME.accentBlue,
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 4,
@@ -244,7 +245,7 @@ const styles = StyleSheet.create({
   optimalBadgeText: {
     fontSize: 9,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     letterSpacing: 0.5,
   },
   metricsRow: {
@@ -254,29 +255,29 @@ const styles = StyleSheet.create({
   },
   metricText: {
     fontSize: 12,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   metricValue: {
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   metricTextSmall: {
     fontSize: 11,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   summaryContainer: {
     marginTop: 16,
     padding: 16,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     borderRadius: 8,
     borderLeftWidth: 3,
-    borderLeftColor: '#87CEEB',
+    borderLeftColor: THEME.accentBlue,
   },
   summaryHeader: {
     marginBottom: 8,
   },
   aiTag: {
-    backgroundColor: '#87CEEB',
+    backgroundColor: THEME.accentBlue,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,
@@ -285,12 +286,12 @@ const styles = StyleSheet.create({
   aiTagText: {
     fontSize: 10,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     letterSpacing: 1,
   },
   summaryText: {
     fontSize: 14,
     lineHeight: 21,
-    color: '#333333',
+    color: THEME.textSecondary,
   },
 });

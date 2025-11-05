@@ -1,8 +1,9 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import BradfieldLogo from '@/components/BradfieldLogo';
 import { LayoutDashboard, Users, Home, Sparkles, FolderKanban } from 'lucide-react-native';
 import { NavigationSection } from '@/types/navigation';
-import BradfieldLogo from '@/components/BradfieldLogo';
 import { FONT_FAMILY } from '@/constants/fonts';
+import THEME from '@/constants/theme';
 
 interface SidebarProps {
   activeSection: NavigationSection;
@@ -12,17 +13,17 @@ interface SidebarProps {
 export default function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
   const menuItems = [
     { id: 'overview' as NavigationSection, label: 'Overview', icon: LayoutDashboard },
+    { id: 'projects' as NavigationSection, label: 'Projects', icon: FolderKanban },
     { id: 'community' as NavigationSection, label: 'Community Feedback', icon: Users },
     { id: 'housing' as NavigationSection, label: 'Predictive Housing', icon: Home },
     { id: 'optimisation' as NavigationSection, label: 'Optimisation', icon: Sparkles },
-    { id: 'projects' as NavigationSection, label: 'Projects', icon: FolderKanban },
   ];
 
   return (
     <View style={styles.sidebar}>
       <View style={styles.header}>
-        <BradfieldLogo size={100} />
-        <Text style={styles.subtitle}>Urban Planning Platform</Text>
+        <BradfieldLogo />
+        <Text style={styles.subtitle}>AI Urban Planning Platform</Text>
       </View>
 
       <View style={styles.nav}>
@@ -36,7 +37,7 @@ export default function Sidebar({ activeSection, onSectionChange }: SidebarProps
               style={[styles.navItem, isActive && styles.navItemActive]}
               onPress={() => onSectionChange(item.id)}
             >
-              <Icon size={20} color={isActive ? '#87CEEB' : '#D3D3D3'} />
+                  <Icon size={20} color={isActive ? THEME.accentBlue : THEME.muted} />
               <Text style={[styles.navText, isActive && styles.navTextActive]}>
                 {item.label}
               </Text>
@@ -60,21 +61,22 @@ export default function Sidebar({ activeSection, onSectionChange }: SidebarProps
 const styles = StyleSheet.create({
   sidebar: {
     width: 280,
-    backgroundColor: '#000000',
+    backgroundColor: THEME.surface,
     paddingVertical: 24,
     paddingHorizontal: 20,
     borderRightWidth: 1,
-    borderRightColor: '#2A2A2A',
+    borderRightColor: THEME.surfaceAlt,
   },
   header: {
     marginBottom: 40,
     alignItems: 'center',
   },
+  /* logoImage removed - use BradfieldLogo component for responsive sizing */
   subtitle: {
-    fontSize: 12,
-    color: '#A0A0A0',
-    fontWeight: '400',
-    fontFamily: FONT_FAMILY.regular,
+    fontSize: 16,
+    color: THEME.textPrimary,
+    fontWeight: '700',
+    fontFamily: FONT_FAMILY.semiBold,
     marginTop: 12,
     textAlign: 'center',
   },
@@ -90,23 +92,23 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   navItemActive: {
-    backgroundColor: '#1A1A1A',
+    backgroundColor: THEME.surfaceAlt,
   },
   navText: {
     marginLeft: 12,
     fontSize: 15,
-    color: '#D3D3D3',
+    color: THEME.muted,
     fontWeight: '500',
     fontFamily: FONT_FAMILY.medium,
   },
   navTextActive: {
-    color: '#87CEEB',
+    color: THEME.accentBlue,
   },
   footer: {
     marginTop: 20,
     paddingTop: 20,
     borderTopWidth: 1,
-    borderTopColor: '#2A2A2A',
+    borderTopColor: THEME.surfaceAlt,
   },
   placeholderSection: {
     paddingHorizontal: 8,
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#666666',
+    color: THEME.textSecondary,
     marginBottom: 12,
     textTransform: 'uppercase',
     letterSpacing: 1,
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
   placeholderItem: {
     fontSize: 13,
     fontFamily: FONT_FAMILY.regular,
-    color: '#555555',
+    color: THEME.muted,
     marginBottom: 8,
   },
 });

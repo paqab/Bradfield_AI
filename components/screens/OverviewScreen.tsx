@@ -8,6 +8,7 @@ import OptimisationChart from '@/components/OptimisationChart';
 import { generateAISummaries } from '@/utils/mockData';
 import { generateProjects } from '@/utils/mockProjects';
 import { FONT_FAMILY } from '@/constants/fonts';
+import THEME from '@/constants/theme';
 
 interface OverviewScreenProps {
   region: string;
@@ -41,7 +42,7 @@ export default function OverviewScreen({ region }: OverviewScreenProps) {
         </View>
 
         <TouchableOpacity style={styles.generateButton} onPress={handleGenerateInsights}>
-          <Zap size={18} color="#000000" />
+          <Zap size={18} color={THEME.textPrimary} />
           <Text style={styles.generateButtonText}>Generate Insights</Text>
         </TouchableOpacity>
       </View>
@@ -50,27 +51,33 @@ export default function OverviewScreen({ region }: OverviewScreenProps) {
         <View style={styles.cardWrapper}>
           <InsightCard
             title="Community Sentiment"
-            icon={<Users size={20} color="#87CEEB" />}
+            icon={<Users size={20} color={THEME.accentBlue} />}
             isGenerating={isGenerating}
           >
             <CommunityChart summary={summaries.community} />
           </InsightCard>
         </View>
 
-        <View style={styles.cardWrapperFull}>
+        <View style={styles.cardWrapper}>
           <InsightCard
             title="Housing Demand Forecast"
-            icon={<Home size={20} color="#87CEEB" />}
+            icon={<Home size={20} color={THEME.accentBlue} />}
             isGenerating={isGenerating}
           >
             <EnhancedHousingChart summary={summaries.housing} />
+            <Text style={styles.housingOverviewText}>
+              The Housing Demand Forecast synthesizes recent permit activity, demographic trends,
+              and market indicators to estimate demand over the next 3–5 years. Use this summary
+              to identify areas of rising demand, potential supply gaps, and opportunities for
+              targeted interventions.
+            </Text>
           </InsightCard>
         </View>
 
         <View style={styles.cardWrapperFull}>
           <InsightCard
             title="Optimisation Scenarios"
-            icon={<Sparkles size={20} color="#87CEEB" />}
+            icon={<Sparkles size={20} color={THEME.accentBlue} />}
             isGenerating={isGenerating}
           >
             <OptimisationChart summary={summaries.optimisation} />
@@ -81,7 +88,7 @@ export default function OverviewScreen({ region }: OverviewScreenProps) {
         <View style={styles.cardWrapperFull}>
           <InsightCard
             title="Active Projects"
-            icon={<FolderKanban size={20} color="#87CEEB" />}
+            icon={<FolderKanban size={20} color={THEME.accentBlue} />}
           >
             <View style={styles.projectsSection}>
               <Text style={styles.projectsSectionSubtitle}>
@@ -110,12 +117,12 @@ export default function OverviewScreen({ region }: OverviewScreenProps) {
                             <View 
                               style={[
                                 styles.projectStatusDot,
-                                { backgroundColor: project.status === 'approved' ? '#4CAF50' : project.status === 'in_development' ? '#2196F3' : '#FFC107' }
+                                      { backgroundColor: project.status === 'approved' ? THEME.success : project.status === 'in_development' ? THEME.accentBlue : THEME.warning }
                               ]} 
                             />
-                            <Text style={styles.projectCardStatusText}>
-                              {project.status === 'under_review' ? 'Under Review' : project.status === 'approved' ? 'Approved' : 'In Development'}
-                            </Text>
+                                        <Text style={styles.projectCardStatusText}>
+                                          {project.status === 'under_review' ? 'Under Review' : project.status === 'approved' ? 'Approved' : 'In Development'}
+                                        </Text>
                           </View>
                           <Text style={styles.projectCardCost}>
                             ${(project.estimatedCost / 1000000).toFixed(1)}M
@@ -127,7 +134,7 @@ export default function OverviewScreen({ region }: OverviewScreenProps) {
               </View>
               <TouchableOpacity style={styles.viewAllButton}>
                 <Text style={styles.viewAllButtonText}>View All Projects</Text>
-                <ArrowRight size={16} color="#87CEEB" />
+                <ArrowRight size={16} color={THEME.accentBlue} />
               </TouchableOpacity>
             </View>
           </InsightCard>
@@ -140,7 +147,7 @@ export default function OverviewScreen({ region }: OverviewScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: '#0b1226',
   },
   header: {
     flexDirection: 'row',
@@ -153,19 +160,19 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: '#FFFFFF',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: '#C7D2FE',
   },
   generateButton: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: '#87CEEB',
+    backgroundColor: '#6E57FF',
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 8,
@@ -174,7 +181,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: '#FFFFFF',
   },
   grid: {
     flexDirection: 'row',
@@ -195,8 +202,15 @@ const styles = StyleSheet.create({
   projectsSectionSubtitle: {
     fontSize: 13,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: '#C7D2FE',
     marginBottom: 20,
+  },
+  housingOverviewText: {
+    fontSize: 13,
+    fontFamily: FONT_FAMILY.regular,
+    color: '#666666',
+    marginTop: 16,
+    lineHeight: 20,
   },
   projectsGrid: {
     flexDirection: 'row',
@@ -205,11 +219,11 @@ const styles = StyleSheet.create({
   },
   projectCard: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: '#0b1226',
     borderRadius: 8,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: '#1f2840',
   },
   projectImage: {
     width: '100%',
@@ -222,14 +236,14 @@ const styles = StyleSheet.create({
   projectCardTitle: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: '#FFFFFF',
     marginBottom: 4,
     minHeight: 36,
   },
   projectCardLocation: {
     fontSize: 12,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: '#AAB4FF',
     marginBottom: 8,
   },
   projectCardFooter: {
@@ -250,12 +264,12 @@ const styles = StyleSheet.create({
   projectCardStatusText: {
     fontSize: 11,
     fontFamily: FONT_FAMILY.medium,
-    color: '#666666',
+    color: '#C7D2FE',
   },
   projectCardCost: {
     fontSize: 12,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: '#FFFFFF',
   },
   viewAllButton: {
     flexDirection: 'row',
@@ -264,11 +278,11 @@ const styles = StyleSheet.create({
     gap: 6,
     paddingVertical: 12,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: '#1f2840',
   },
   viewAllButtonText: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#87CEEB',
+    color: '#6E57FF',
   },
 });

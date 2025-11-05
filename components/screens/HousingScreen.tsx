@@ -5,6 +5,7 @@ import HousingChart from '@/components/HousingChart';
 import HousingScatterChart from '@/components/HousingScatterChart';
 import { generateHousingScatterData } from '@/utils/housingData';
 import { FONT_FAMILY } from '@/constants/fonts';
+import THEME from '@/constants/theme';
 
 export default function HousingScreen() {
   const predictions = [
@@ -25,7 +26,7 @@ export default function HousingScreen() {
         <View style={styles.chartSection}>
           <InsightCard
             title="Demand vs Supply Trends"
-            icon={<TrendingUp size={20} color="#87CEEB" />}
+            icon={<TrendingUp size={20} color={THEME.accentBlue} />}
           >
             <HousingChart summary="Housing demand outpacing supply growth by 4% on average. Targeted interventions recommended for coastal and metro zones." />
           </InsightCard>
@@ -34,7 +35,7 @@ export default function HousingScreen() {
         <View style={styles.chartSection}>
           <InsightCard
             title="Zone Market Analysis"
-            icon={<TrendingUp size={20} color="#87CEEB" />}
+            icon={<TrendingUp size={20} color={THEME.accentBlue} />}
           >
             <HousingScatterChart data={generateHousingScatterData()} />
           </InsightCard>
@@ -42,7 +43,7 @@ export default function HousingScreen() {
 
         <View style={styles.predictionsSection}>
           <View style={styles.sectionHeader}>
-            <Building2 size={20} color="#000000" />
+            <Building2 size={20} color={THEME.textPrimary} />
             <Text style={styles.sectionTitle}>Regional Predictions (Next 6 Months)</Text>
           </View>
 
@@ -50,7 +51,7 @@ export default function HousingScreen() {
             {predictions.map((pred) => (
               <View key={pred.zone} style={styles.predictionCard}>
                 <View style={styles.predictionHeader}>
-                  <Home size={18} color="#87CEEB" />
+                  <Home size={18} color={THEME.accentBlue} />
                   <Text style={styles.zoneName}>{pred.zone}</Text>
                 </View>
 
@@ -95,7 +96,7 @@ export default function HousingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.background,
   },
   header: {
     padding: 32,
@@ -105,13 +106,13 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   content: {
     paddingHorizontal: 32,
@@ -121,11 +122,11 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   predictionsSection: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     borderRadius: 12,
     padding: 24,
     borderWidth: 1,
-    borderColor: '#F0F0F0',
+    borderColor: THEME.surfaceAlt,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   predictionGrid: {
     flexDirection: 'row',
@@ -147,10 +148,10 @@ const styles = StyleSheet.create({
   predictionCard: {
     width: '48%',
     padding: 20,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
   },
   predictionHeader: {
     flexDirection: 'row',
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   metrics: {
     marginBottom: 16,
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
   metricLabel: {
     fontSize: 13,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   metricValue: {
     fontSize: 15,
@@ -184,16 +185,16 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY.bold,
   },
   demandValue: {
-    color: '#87CEEB',
+    color: THEME.accentBlue,
   },
   supplyValue: {
-    color: '#F5F5DC',
+    color: THEME.accentPurple,
   },
   critical: {
-    color: '#DC3545',
+    color: THEME.danger,
   },
   balanced: {
-    color: '#28A745',
+    color: THEME.success,
   },
   statusBadge: {
     paddingHorizontal: 12,
@@ -205,15 +206,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   criticalBadge: {
-    backgroundColor: '#FFE5E5',
+    backgroundColor: '#351010',
   },
   balancedBadge: {
-    backgroundColor: '#D4F4DD',
+    backgroundColor: '#0D2A17',
   },
   surplus: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: '#0E2210',
   },
 });

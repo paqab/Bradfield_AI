@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { ReactNode } from 'react';
 import { FONT_FAMILY } from '@/constants/fonts';
+import THEME from '@/constants/theme';
 
 interface InsightCardProps {
   title: string;
@@ -21,7 +22,7 @@ export default function InsightCard({ title, icon, children, isGenerating }: Ins
 
       {isGenerating ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#87CEEB" />
+          <ActivityIndicator size="large" color={THEME.accentBlue} />
           <Text style={styles.loadingText}>Generating AI insights...</Text>
         </View>
       ) : (
@@ -33,16 +34,16 @@ export default function InsightCard({ title, icon, children, isGenerating }: Ins
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     borderRadius: 12,
     padding: 24,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
+    shadowOpacity: 0.12,
+    shadowRadius: 10,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#F0F0F0',
+    borderColor: THEME.surfaceAlt,
   },
   header: {
     marginBottom: 20,
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   content: {
     minHeight: 200,
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
     fontStyle: 'italic',
   },
 });

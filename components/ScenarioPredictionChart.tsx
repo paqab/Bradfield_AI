@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart, ComposedChart, Bar, BarChart } from 'recharts';
 import { FONT_FAMILY } from '@/constants/fonts';
+import THEME from '@/constants/theme';
 
 interface ScenarioPredictionChartProps {
   scenarioId: string;
@@ -22,44 +23,45 @@ export default function ScenarioPredictionChart({ scenarioId, data }: ScenarioPr
           <ComposedChart data={data} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
             <defs>
               <linearGradient id="populationGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#87CEEB" stopOpacity={0.4}/>
-                <stop offset="95%" stopColor="#87CEEB" stopOpacity={0}/>
+                <stop offset="5%" stopColor={THEME.accentBlue} stopOpacity={0.4}/>
+                <stop offset="95%" stopColor={THEME.accentBlue} stopOpacity={0}/>
               </linearGradient>
               <linearGradient id="economicGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#4CAF50" stopOpacity={0.4}/>
-                <stop offset="95%" stopColor="#4CAF50" stopOpacity={0}/>
+                <stop offset="5%" stopColor={THEME.success} stopOpacity={0.4}/>
+                <stop offset="95%" stopColor={THEME.success} stopOpacity={0}/>
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" opacity={0.5} />
+            <CartesianGrid strokeDasharray="3 3" stroke={THEME.surfaceAlt} opacity={0.5} />
             <XAxis 
               dataKey="month" 
-              stroke="#666666" 
+              stroke={THEME.textSecondary} 
               style={{ fontSize: 11 }}
-              tick={{ fill: '#666666' }}
+              tick={{ fill: THEME.textSecondary }}
             />
             <YAxis 
               yAxisId="left"
-              stroke="#666666" 
+              stroke={THEME.textSecondary} 
               style={{ fontSize: 11 }}
               label={{ value: 'Score', angle: -90, position: 'insideLeft', offset: 10 }}
             />
             <YAxis 
               yAxisId="right"
               orientation="right"
-              stroke="#666666" 
+              stroke={THEME.textSecondary} 
               style={{ fontSize: 11 }}
             />
             <Tooltip 
               contentStyle={{
-                backgroundColor: '#FFFFFF',
-                border: '1px solid #E5E5E5',
+                backgroundColor: THEME.surface,
+                border: `1px solid ${THEME.surfaceAlt}`,
                 borderRadius: 8,
                 fontSize: 12,
                 fontFamily: FONT_FAMILY.regular,
+                color: THEME.textPrimary,
               }}
             />
             <Legend 
-              wrapperStyle={{ fontSize: 11, paddingTop: 10 }}
+              wrapperStyle={{ fontSize: 11, paddingTop: 10, color: THEME.textSecondary }}
               iconType="line"
             />
             {/* Area fills */}
@@ -84,34 +86,34 @@ export default function ScenarioPredictionChart({ scenarioId, data }: ScenarioPr
               yAxisId="left"
               type="monotone"
               dataKey="populationImpact"
-              stroke="#87CEEB"
+              stroke={THEME.accentBlue}
               strokeWidth={2}
-              dot={{ fill: '#87CEEB', r: 4 }}
+              dot={{ fill: THEME.accentBlue, r: 4 }}
               name="Population Impact"
             />
             <Line
               yAxisId="left"
               type="monotone"
               dataKey="economicGrowth"
-              stroke="#4CAF50"
+              stroke={THEME.success}
               strokeWidth={2}
-              dot={{ fill: '#4CAF50', r: 4 }}
+              dot={{ fill: THEME.success, r: 4 }}
               name="Economic Growth"
             />
             <Line
               yAxisId="left"
               type="monotone"
               dataKey="environmentalScore"
-              stroke="#20B2AA"
+              stroke={THEME.accentPop}
               strokeWidth={2}
-              dot={{ fill: '#20B2AA', r: 4 }}
+              dot={{ fill: THEME.accentPop, r: 4 }}
               name="Environmental"
             />
             {/* Bar for approval rating */}
             <Bar
               yAxisId="right"
               dataKey="approvalRating"
-              fill="#FFC107"
+              fill={THEME.warning}
               opacity={0.6}
               name="Approval %"
             />

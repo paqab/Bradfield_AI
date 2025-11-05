@@ -3,6 +3,7 @@ import { MessageSquare, TrendingUp, MapPin, Clock, Heart, MessageCircle, Share2,
 import { useState } from 'react';
 import InsightCard from '@/components/InsightCard';
 import CommunityChart from '@/components/CommunityChart';
+import THEME from '@/constants/theme';
 import { FONT_FAMILY } from '@/constants/fonts';
 
 export default function CommunityScreen() {
@@ -110,7 +111,7 @@ export default function CommunityScreen() {
         <View style={styles.chartSection}>
           <InsightCard
             title="Sentiment Analysis"
-            icon={<TrendingUp size={20} color="#87CEEB" />}
+            icon={<TrendingUp size={20} color={THEME.accentBlue} />}
           >
             <CommunityChart summary="Community engagement is strong across all categories. Housing and parks receive highest approval ratings." />
           </InsightCard>
@@ -118,7 +119,7 @@ export default function CommunityScreen() {
 
         <View style={styles.feedbackSection}>
           <View style={styles.sectionHeader}>
-            <MessageSquare size={20} color="#000000" />
+            <MessageSquare size={20} color={THEME.textPrimary} />
             <Text style={styles.sectionTitle}>Recent Feedback</Text>
           </View>
 
@@ -134,9 +135,9 @@ export default function CommunityScreen() {
                     <View style={styles.authorInfo}>
                       <Text style={styles.authorName}>{item.author}</Text>
                       <View style={styles.authorMeta}>
-                        <MapPin size={12} color="#666666" />
+                        <MapPin size={12} color={THEME.muted} />
                         <Text style={styles.location}>{item.location}</Text>
-                        <Clock size={12} color="#666666" />
+                        <Clock size={12} color={THEME.muted} />
                         <Text style={styles.timestamp}>{item.timestamp}</Text>
                       </View>
                     </View>
@@ -146,9 +147,9 @@ export default function CommunityScreen() {
                   </View>
                 </View>
                 
-                <View style={styles.categoryBadge}>
-                  <Text style={styles.categoryText}>{item.category}</Text>
-                </View>
+                    <View style={styles.categoryBadge}>
+                      <Text style={styles.categoryText}>{item.category}</Text>
+                    </View>
                 
                 <Text style={styles.feedbackText}>{item.text}</Text>
                 
@@ -169,11 +170,11 @@ export default function CommunityScreen() {
                       <Text style={styles.expandButtonText}>
                         {isExpanded ? 'Show Less' : 'Read Full Feedback'}
                       </Text>
-                      {isExpanded ? (
-                        <ChevronUp size={16} color="#87CEEB" />
-                      ) : (
-                        <ChevronDown size={16} color="#87CEEB" />
-                      )}
+                        {isExpanded ? (
+                          <ChevronUp size={16} color={THEME.accentBlue} />
+                        ) : (
+                          <ChevronDown size={16} color={THEME.accentBlue} />
+                        )}
                     </TouchableOpacity>
                     
                     {isExpanded && (
@@ -186,15 +187,15 @@ export default function CommunityScreen() {
                 
                 <View style={styles.engagementContainer}>
                   <View style={styles.engagementItem}>
-                    <Heart size={14} color="#DC3545" fill="#DC3545" />
+                    <Heart size={14} color={THEME.danger} fill={THEME.danger} />
                     <Text style={styles.engagementText}>{item.engagement?.likes || 0}</Text>
                   </View>
                   <View style={styles.engagementItem}>
-                    <MessageCircle size={14} color="#87CEEB" />
+                    <MessageCircle size={14} color={THEME.accentBlue} />
                     <Text style={styles.engagementText}>{item.engagement?.comments || 0}</Text>
                   </View>
                   <View style={styles.engagementItem}>
-                    <Share2 size={14} color="#666666" />
+                    <Share2 size={14} color={THEME.muted} />
                     <Text style={styles.engagementText}>{item.engagement?.shares || 0}</Text>
                   </View>
                 </View>
@@ -210,7 +211,7 @@ export default function CommunityScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.background,
   },
   header: {
     padding: 32,
@@ -220,13 +221,13 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   content: {
     paddingHorizontal: 32,
@@ -236,11 +237,11 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   feedbackSection: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     borderRadius: 12,
     padding: 24,
     borderWidth: 1,
-    borderColor: '#F0F0F0',
+    borderColor: THEME.surfaceAlt,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -252,25 +253,25 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   feedbackCard: {
     padding: 16,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     borderRadius: 12,
     marginBottom: 16,
     borderLeftWidth: 3,
-    borderLeftColor: '#87CEEB',
+    borderLeftColor: THEME.accentBlue,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    shadowOpacity: 0.06,
+    shadowRadius: 3,
     elevation: 2,
   },
   feedbackCardExpanded: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surfaceAlt,
   },
   feedbackHeader: {
     flexDirection: 'row',
@@ -288,7 +289,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#000000',
+    backgroundColor: THEME.surfaceAlt,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -296,7 +297,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#FFFFFF',
+    color: THEME.textPrimary,
   },
   authorInfo: {
     flex: 1,
@@ -305,7 +306,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 4,
   },
   authorMeta: {
@@ -317,17 +318,17 @@ const styles = StyleSheet.create({
   location: {
     fontSize: 11,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
     marginRight: 8,
   },
   timestamp: {
     fontSize: 11,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   categoryBadge: {
     alignSelf: 'flex-start',
-    backgroundColor: '#E5E5E5',
+    backgroundColor: THEME.surfaceAlt,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 12,
@@ -337,7 +338,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '600',
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   sentimentBadge: {
     paddingHorizontal: 10,
@@ -345,23 +346,23 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   positive: {
-    backgroundColor: '#D4F4DD',
+    backgroundColor: THEME.success + '22',
   },
   negative: {
-    backgroundColor: '#FFE5E5',
+    backgroundColor: THEME.danger + '22',
   },
   sentimentText: {
     fontSize: 11,
     fontWeight: '600',
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
     textTransform: 'capitalize',
   },
   feedbackText: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
     lineHeight: 22,
-    color: '#333333',
+    color: THEME.textSecondary,
     marginBottom: 12,
   },
   expandButton: {
@@ -376,21 +377,21 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#87CEEB',
+    color: THEME.accentBlue,
   },
   detailedFeedbackContainer: {
     padding: 16,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     borderRadius: 8,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
   },
   detailedFeedbackText: {
     fontSize: 13,
     fontFamily: FONT_FAMILY.regular,
     lineHeight: 20,
-    color: '#333333',
+    color: THEME.textSecondary,
   },
   engagementContainer: {
     flexDirection: 'row',
@@ -398,7 +399,7 @@ const styles = StyleSheet.create({
     gap: 20,
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: THEME.surfaceAlt,
   },
   engagementItem: {
     flexDirection: 'row',
@@ -409,6 +410,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
 });

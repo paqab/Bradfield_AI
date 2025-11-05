@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+const PLACEHOLDER = require('../../assets/bradfield.png');
 import { Building2, MapPin, User, DollarSign, TrendingUp, Calendar, FileText, CheckCircle, Clock, XCircle } from 'lucide-react-native';
 import { generateProjects, Project, ProjectCategory, getCategoryColor, getCategoryTextColor, getStatusLabel, getStatusColor } from '@/utils/mockProjects';
 import { FONT_FAMILY } from '@/constants/fonts';
+import THEME from '@/constants/theme';
 
 const ALL_CATEGORIES: ProjectCategory[] = ['Healthcare', 'Education', 'Transport', 'Infrastructure', 'Housing', 'Public Services'];
 
@@ -101,11 +103,17 @@ export default function ProjectsScreen() {
           {filteredProjects.map((project) => (
             <View key={project.id} style={styles.projectCard}>
               {/* Project Image */}
-              {project.images && project.images.length > 0 && (
+              {project.images && project.images.length > 0 ? (
                 <Image
                   source={project.images[0]}
                   style={styles.projectImage}
                   resizeMode="cover"
+                />
+              ) : (
+                <Image
+                  source={PLACEHOLDER}
+                  style={[styles.projectImage, styles.placeholderImage]}
+                  resizeMode="contain"
                 />
               )}
               
@@ -151,11 +159,11 @@ export default function ProjectsScreen() {
               {/* Project Info Row */}
               <View style={styles.infoRow}>
                 <View style={styles.infoItem}>
-                  <MapPin size={14} color="#666666" />
+                        <MapPin size={14} color={THEME.muted} />
                   <Text style={styles.infoText}>{project.location}</Text>
                 </View>
                 <View style={styles.infoItem}>
-                  <User size={14} color="#666666" />
+                        <User size={14} color={THEME.muted} />
                   <Text style={styles.infoText}>{project.developer}</Text>
                 </View>
               </View>
@@ -186,7 +194,7 @@ export default function ProjectsScreen() {
               {/* Community Support */}
               <View style={styles.supportSection}>
                 <View style={styles.supportHeader}>
-                  <TrendingUp size={14} color="#4CAF50" />
+                  <TrendingUp size={14} color={THEME.success} />
                   <Text style={styles.supportLabel}>Community Support</Text>
                   <Text style={styles.supportValue}>{project.communitySupport}%</Text>
                 </View>
@@ -203,19 +211,19 @@ export default function ProjectsScreen() {
               {/* Metrics Row */}
               <View style={styles.metricsRow}>
                 <View style={styles.metric}>
-                  <DollarSign size={16} color="#87CEEB" />
+                  <DollarSign size={16} color={THEME.accentBlue} />
                   <Text style={styles.metricValue}>
                     ${(project.estimatedCost / 1000000).toFixed(1)}M
                   </Text>
                   <Text style={styles.metricLabel}>Estimated Cost</Text>
                 </View>
                 <View style={styles.metric}>
-                  <Calendar size={16} color="#87CEEB" />
+                  <Calendar size={16} color={THEME.accentBlue} />
                   <Text style={styles.metricValue}>{project.estimatedCompletion}</Text>
                   <Text style={styles.metricLabel}>Completion</Text>
                 </View>
                 <View style={styles.metric}>
-                  <TrendingUp size={16} color="#87CEEB" />
+                  <TrendingUp size={16} color={THEME.accentBlue} />
                   <Text style={styles.metricValue}>{project.impactScore}</Text>
                   <Text style={styles.metricLabel}>Impact Score</Text>
                 </View>
@@ -232,7 +240,7 @@ export default function ProjectsScreen() {
 
         {filteredProjects.length === 0 && (
           <View style={styles.emptyState}>
-            <Building2 size={48} color="#D3D3D3" />
+            <Building2 size={48} color={THEME.muted} />
             <Text style={styles.emptyStateText}>No projects found</Text>
             <Text style={styles.emptyStateSubtext}>
               Try selecting a different category or showing completed projects
@@ -247,7 +255,7 @@ export default function ProjectsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.background,
   },
   header: {
     padding: 32,
@@ -257,13 +265,13 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   content: {
     paddingHorizontal: 32,
@@ -280,9 +288,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
   },
   filterChipActive: {
     borderWidth: 2,
@@ -290,11 +298,11 @@ const styles = StyleSheet.create({
   filterText: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.medium,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   filterTextActive: {
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   toggleContainer: {
     flexDirection: 'row',
@@ -307,18 +315,18 @@ const styles = StyleSheet.create({
     width: 44,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: THEME.surfaceAlt,
     padding: 2,
     justifyContent: 'center',
   },
   toggleSwitchActive: {
-    backgroundColor: '#87CEEB',
+    backgroundColor: THEME.accentBlue,
   },
   toggleDot: {
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.textPrimary,
     alignSelf: 'flex-start',
   },
   toggleDotActive: {
@@ -327,7 +335,7 @@ const styles = StyleSheet.create({
   toggleLabel: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   countContainer: {
     marginBottom: 24,
@@ -335,27 +343,31 @@ const styles = StyleSheet.create({
   countText: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   projectsGrid: {
     gap: 20,
   },
   projectCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
     elevation: 2,
   },
   projectImage: {
     width: '100%',
     height: 200,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: THEME.surfaceAlt,
+  },
+  placeholderImage: {
+    tintColor: THEME.muted,
+    backgroundColor: THEME.surfaceAlt,
   },
   cardContent: {
     padding: 20,
@@ -391,7 +403,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 12,
   },
   infoRow: {
@@ -408,12 +420,12 @@ const styles = StyleSheet.create({
   infoText: {
     fontSize: 13,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   description: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
-    color: '#333333',
+    color: THEME.textSecondary,
     lineHeight: 20,
     marginBottom: 16,
   },
@@ -429,16 +441,16 @@ const styles = StyleSheet.create({
   progressLabel: {
     fontSize: 12,
     fontFamily: FONT_FAMILY.medium,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   progressValue: {
     fontSize: 12,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   progressBar: {
     height: 6,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: THEME.surfaceAlt,
     borderRadius: 3,
     overflow: 'hidden',
   },
@@ -458,13 +470,13 @@ const styles = StyleSheet.create({
   supportLabel: {
     fontSize: 12,
     fontFamily: FONT_FAMILY.medium,
-    color: '#666666',
+    color: THEME.textSecondary,
     flex: 1,
   },
   supportValue: {
     fontSize: 12,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#4CAF50',
+    color: THEME.success,
   },
   metricsRow: {
     flexDirection: 'row',
@@ -472,7 +484,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     marginBottom: 16,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: THEME.surfaceAlt,
   },
   metric: {
     alignItems: 'center',
@@ -481,17 +493,17 @@ const styles = StyleSheet.create({
   metricValue: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginTop: 4,
     marginBottom: 2,
   },
   metricLabel: {
     fontSize: 11,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   actionButton: {
-    backgroundColor: '#000000',
+    backgroundColor: THEME.accentPurple,
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
@@ -499,7 +511,7 @@ const styles = StyleSheet.create({
   actionButtonText: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#FFFFFF',
+    color: THEME.textPrimary,
   },
   emptyState: {
     alignItems: 'center',
@@ -509,14 +521,14 @@ const styles = StyleSheet.create({
   emptyStateText: {
     fontSize: 18,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#666666',
+    color: THEME.textSecondary,
     marginTop: 16,
     marginBottom: 8,
   },
   emptyStateSubtext: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
-    color: '#999999',
+    color: THEME.muted,
     textAlign: 'center',
   },
 });

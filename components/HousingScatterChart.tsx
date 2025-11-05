@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
 import { FONT_FAMILY } from '@/constants/fonts';
+import THEME from '@/constants/theme';
 
 interface HousingScatterChartProps {
   data: {
@@ -11,7 +12,7 @@ interface HousingScatterChartProps {
   }[];
 }
 
-const COLORS = ['#87CEEB', '#4682B4', '#5F9EA0', '#20B2AA', '#00CED1', '#1E90FF', '#FF6B6B', '#4CAF50'];
+const COLORS = [THEME.accentBlue, THEME.accentBlue, THEME.accentPop, THEME.accentPurple, THEME.accentBlue, THEME.accentBlue, THEME.danger, THEME.success];
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
@@ -55,12 +56,12 @@ export default function HousingScatterChart({ data }: HousingScatterChartProps) 
       <View style={styles.chartWrapper}>
         <ResponsiveContainer width="100%" height={240}>
           <ScatterChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" opacity={0.5} />
+            <CartesianGrid strokeDasharray="3 3" stroke={THEME.surfaceAlt} opacity={0.5} />
             <XAxis
               type="number"
               dataKey="affordability"
               name="Affordability Index"
-              stroke="#666666"
+              stroke={THEME.textSecondary}
               style={{ fontSize: 11 }}
               label={{ value: 'Affordability Index', position: 'insideBottom', offset: -5 }}
               domain={[0, 100]}
@@ -69,7 +70,7 @@ export default function HousingScatterChart({ data }: HousingScatterChartProps) 
               type="number"
               dataKey="demand"
               name="Demand (units)"
-              stroke="#666666"
+              stroke={THEME.textSecondary}
               style={{ fontSize: 11 }}
               label={{ value: 'Demand (units)', angle: -90, position: 'insideLeft', offset: 10 }}
             />
@@ -78,12 +79,12 @@ export default function HousingScatterChart({ data }: HousingScatterChartProps) 
               wrapperStyle={{ fontSize: 11, paddingTop: 10 }} 
               iconType="circle"
             />
-            <ReferenceLine x={avgAffordability} stroke="#87CEEB" strokeDasharray="5 5" opacity={0.5} />
-            <ReferenceLine y={avgDemand} stroke="#87CEEB" strokeDasharray="5 5" opacity={0.5} />
+            <ReferenceLine x={avgAffordability} stroke={THEME.accentBlue} strokeDasharray="5 5" opacity={0.5} />
+            <ReferenceLine y={avgDemand} stroke={THEME.accentBlue} strokeDasharray="5 5" opacity={0.5} />
             <Scatter
               name="Housing Zones"
               data={data}
-              fill="#87CEEB"
+              fill={THEME.accentBlue}
             >
               {data.map((entry, index) => (
                 <Cell 
@@ -107,13 +108,13 @@ const styles = StyleSheet.create({
   chartTitle: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 4,
   },
   chartSubtitle: {
     fontSize: 11,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
     marginBottom: 12,
     fontStyle: 'italic',
   },
@@ -122,11 +123,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   tooltipContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -137,12 +138,12 @@ const styles = StyleSheet.create({
   tooltipTitle: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 8,
   },
   tooltipDivider: {
     height: 1,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: THEME.surfaceAlt,
     marginVertical: 6,
   },
   tooltipRow: {
@@ -153,15 +154,15 @@ const styles = StyleSheet.create({
   tooltipLabel: {
     fontSize: 12,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
   },
   tooltipValue: {
     fontSize: 12,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   criticalGap: {
-    color: '#DC3545',
+    color: THEME.danger,
   },
 });
 

@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, ReferenceLine, ComposedChart } from 'recharts';
 import { generateHousingData } from '@/utils/mockData';
+import THEME from '@/constants/theme';
 
 interface HousingChartProps {
   summary?: string;
@@ -61,15 +62,15 @@ export default function HousingChart({ summary }: HousingChartProps) {
           <ComposedChart data={allData} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
             <defs>
               <linearGradient id="demandGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#87CEEB" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#87CEEB" stopOpacity={0}/>
+                <stop offset="5%" stopColor={THEME.accentBlue} stopOpacity={0.3}/>
+                <stop offset="95%" stopColor={THEME.accentBlue} stopOpacity={0}/>
               </linearGradient>
               <linearGradient id="supplyGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#F5F5DC" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#F5F5DC" stopOpacity={0}/>
+                <stop offset="5%" stopColor={THEME.accentPurple} stopOpacity={0.3}/>
+                <stop offset="95%" stopColor={THEME.accentPurple} stopOpacity={0}/>
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" opacity={0.5} />
+            <CartesianGrid strokeDasharray="3 3" stroke={THEME.surfaceAlt} opacity={0.5} />
             <XAxis 
               dataKey="month" 
               stroke="#666666" 
@@ -89,10 +90,10 @@ export default function HousingChart({ summary }: HousingChartProps) {
             />
             <ReferenceLine 
               y={avgGap} 
-              stroke="#FF6B6B" 
+              stroke={THEME.danger} 
               strokeDasharray="5 5" 
               opacity={0.5}
-              label={{ value: 'Avg Gap', position: 'right', fill: '#FF6B6B', fontSize: 10 }}
+              label={{ value: 'Avg Gap', position: 'right', fill: THEME.danger, fontSize: 10 }}
             />
             {/* Area fills for visual depth */}
             <Area
@@ -113,28 +114,28 @@ export default function HousingChart({ summary }: HousingChartProps) {
             <Line
               type="monotone"
               dataKey="demand"
-              stroke="#87CEEB"
+              stroke={THEME.accentBlue}
               strokeWidth={3}
-              dot={{ fill: '#87CEEB', r: 5, strokeWidth: 2, stroke: '#FFFFFF' }}
-              activeDot={{ r: 7, strokeWidth: 2, stroke: '#FFFFFF' }}
+              dot={{ fill: THEME.accentBlue, r: 5, strokeWidth: 2, stroke: THEME.textPrimary }}
+              activeDot={{ r: 7, strokeWidth: 2, stroke: THEME.textPrimary }}
               name="Demand"
             />
             {/* Supply line */}
             <Line
               type="monotone"
               dataKey="supply"
-              stroke="#F5F5DC"
+              stroke={THEME.accentPurple}
               strokeWidth={3}
-              dot={{ fill: '#F5F5DC', r: 5, strokeWidth: 2, stroke: '#FFFFFF' }}
-              activeDot={{ r: 7, strokeWidth: 2, stroke: '#FFFFFF' }}
+              dot={{ fill: THEME.accentPurple, r: 5, strokeWidth: 2, stroke: THEME.textPrimary }}
+              activeDot={{ r: 7, strokeWidth: 2, stroke: THEME.textPrimary }}
               name="Supply"
             />
             {/* Projected lines with different styling */}
             {projectedData.map((item, index) => (
-              <ReferenceLine
+                <ReferenceLine
                 key={`projected-${index}`}
                 x={item.month}
-                stroke="#999999"
+                stroke={THEME.textSecondary}
                 strokeDasharray="2 2"
                 opacity={0.3}
               />
@@ -190,11 +191,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   tooltipContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -205,12 +206,12 @@ const styles = StyleSheet.create({
   tooltipTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 8,
   },
   tooltipDivider: {
     height: 1,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: THEME.surfaceAlt,
     marginVertical: 6,
   },
   tooltipRow: {
@@ -226,25 +227,25 @@ const styles = StyleSheet.create({
   },
   tooltipLabel: {
     fontSize: 12,
-    color: '#666666',
+    color: THEME.textSecondary,
     flex: 1,
   },
   tooltipValue: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   demandColor: {
-    color: '#87CEEB',
+    color: THEME.accentBlue,
   },
   supplyColor: {
-    color: '#F5F5DC',
+    color: THEME.accentPurple,
   },
   criticalGap: {
-    color: '#DC3545',
+    color: THEME.danger,
   },
   positiveGap: {
-    color: '#28A745',
+    color: THEME.success,
   },
   metricsContainer: {
     flexDirection: 'row',
@@ -253,43 +254,43 @@ const styles = StyleSheet.create({
   },
   metricCard: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
     alignItems: 'center',
   },
   metricLabel: {
     fontSize: 11,
-    color: '#666666',
+    color: THEME.textSecondary,
     marginBottom: 4,
     textAlign: 'center',
   },
   metricValue: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 2,
   },
   metricSubtext: {
     fontSize: 10,
-    color: '#666666',
+    color: THEME.textSecondary,
     textAlign: 'center',
   },
   summaryContainer: {
     marginTop: 16,
     padding: 16,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     borderRadius: 8,
     borderLeftWidth: 3,
-    borderLeftColor: '#87CEEB',
+    borderLeftColor: THEME.accentBlue,
   },
   summaryHeader: {
     marginBottom: 8,
   },
   aiTag: {
-    backgroundColor: '#87CEEB',
+    backgroundColor: THEME.accentBlue,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,
@@ -298,12 +299,12 @@ const styles = StyleSheet.create({
   aiTagText: {
     fontSize: 10,
     fontWeight: '700',
-    color: '#000000',
+    color: THEME.textPrimary,
     letterSpacing: 1,
   },
   summaryText: {
     fontSize: 14,
     lineHeight: 21,
-    color: '#333333',
+    color: THEME.textSecondary,
   },
 });

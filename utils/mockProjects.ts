@@ -181,28 +181,23 @@ export const generateProjects = (): Project[] => [
   },
 ];
 
+import THEME from '@/constants/theme';
+
 export const getCategoryColor = (category: ProjectCategory): string => {
   const colors: Record<ProjectCategory, string> = {
-    Healthcare: '#E8F5E9',
-    Education: '#E3F2FD',
-    Transport: '#FFF3E0',
-    Infrastructure: '#F3E5F5',
-    Housing: '#FCE4EC',
-    'Public Services': '#E0F2F1',
+    Healthcare: THEME.surfaceAlt,
+    Education: THEME.accentBlue,
+    Transport: THEME.accentPurple,
+    Infrastructure: THEME.accentPurple,
+    Housing: THEME.accentPop,
+    'Public Services': THEME.accentBlue,
   };
-  return colors[category] || '#F5F5F5';
+  return colors[category] || THEME.surface;
 };
 
 export const getCategoryTextColor = (category: ProjectCategory): string => {
-  const colors: Record<ProjectCategory, string> = {
-    Healthcare: '#2E7D32',
-    Education: '#1565C0',
-    Transport: '#E65100',
-    Infrastructure: '#6A1B9A',
-    Housing: '#C2185B',
-    'Public Services': '#00695C',
-  };
-  return colors[category] || '#333333';
+  // For our dark theme, category badges use accent backgrounds so white text reads best
+  return THEME.textPrimary;
 };
 
 export const getStatusLabel = (status: ProjectStatus): string => {
@@ -218,11 +213,11 @@ export const getStatusLabel = (status: ProjectStatus): string => {
 
 export const getStatusColor = (status: ProjectStatus): string => {
   const colors: Record<ProjectStatus, string> = {
-    under_review: '#FFC107',
-    approved: '#4CAF50',
-    in_development: '#2196F3',
-    completed: '#9E9E9E',
-    rejected: '#F44336',
+    under_review: THEME.warning,
+    approved: THEME.success,
+    in_development: THEME.accentBlue,
+    completed: THEME.muted,
+    rejected: THEME.danger,
   };
   return colors[status];
 };

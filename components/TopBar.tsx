@@ -1,6 +1,7 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Search, User } from 'lucide-react-native';
 import { FONT_FAMILY } from '@/constants/fonts';
+import THEME from '@/constants/theme';
 
 interface TopBarProps {
   region: string;
@@ -16,11 +17,11 @@ export default function TopBar({ region, onRegionChange }: TopBarProps) {
 
       <View style={styles.rightSection}>
         <View style={styles.searchContainer}>
-          <Search size={18} color="#666666" style={styles.searchIcon} />
+          <Search size={18} color={THEME.muted} style={styles.searchIcon} />
           <TextInput
             style={styles.searchInput}
             placeholder="Search projects, data..."
-            placeholderTextColor="#888888"
+            placeholderTextColor={THEME.muted}
           />
         </View>
 
@@ -32,7 +33,7 @@ export default function TopBar({ region, onRegionChange }: TopBarProps) {
         </View>
 
         <TouchableOpacity style={styles.profileButton}>
-          <User size={20} color="#FFFFFF" />
+          <User size={20} color={THEME.textPrimary} />
         </TouchableOpacity>
       </View>
     </View>
@@ -42,19 +43,19 @@ export default function TopBar({ region, onRegionChange }: TopBarProps) {
 const styles = StyleSheet.create({
   topBar: {
     height: 72,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 32,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5E5',
+    borderBottomColor: THEME.surfaceAlt,
   },
   title: {
     fontSize: 20,
     fontWeight: '700',
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   rightSection: {
     flexDirection: 'row',
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: THEME.surfaceAlt,
     borderRadius: 8,
     paddingHorizontal: 12,
     height: 40,
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   regionSelector: {
     flexDirection: 'row',
@@ -86,21 +87,21 @@ const styles = StyleSheet.create({
   },
   regionLabel: {
     fontSize: 14,
-    color: '#666666',
+    color: THEME.textSecondary,
     fontWeight: '500',
     fontFamily: FONT_FAMILY.medium,
   },
   dropdown: {
-    backgroundColor: '#F5F5DC',
+    backgroundColor: THEME.surfaceAlt,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#D3D3D3',
+    borderColor: THEME.surfaceAlt,
   },
   regionText: {
     fontSize: 14,
-    color: '#000000',
+    color: THEME.textPrimary,
     fontWeight: '500',
     fontFamily: FONT_FAMILY.medium,
   },
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#000000',
+    backgroundColor: THEME.accentPurple,
     alignItems: 'center',
     justifyContent: 'center',
   },

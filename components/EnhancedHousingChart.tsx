@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { generateHousingData } from '@/utils/mockData';
 import { generateHousingScatterData } from '@/utils/housingData';
 import { FONT_FAMILY } from '@/constants/fonts';
+import THEME from '@/constants/theme';
 
 interface EnhancedHousingChartProps {
   summary?: string;
@@ -82,7 +83,7 @@ export default function EnhancedHousingChart({ summary }: EnhancedHousingChartPr
   const allData = [...data, ...projectedData];
   const avgGap = allData.reduce((sum, d) => sum + (d.demand - d.supply), 0) / allData.length;
 
-  const COLORS = ['#87CEEB', '#4682B4', '#5F9EA0', '#20B2AA', '#00CED1', '#1E90FF', '#FF6B6B', '#4CAF50'];
+  const COLORS = [THEME.accentBlue, THEME.accentBlue, THEME.accentPop, THEME.accentPurple, THEME.accentBlue, THEME.accentBlue, THEME.danger, THEME.success];
 
   return (
     <View style={styles.container}>
@@ -94,23 +95,23 @@ export default function EnhancedHousingChart({ summary }: EnhancedHousingChartPr
             <ComposedChart data={allData} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
               <defs>
                 <linearGradient id="demandGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#87CEEB" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#87CEEB" stopOpacity={0}/>
+                  <stop offset="5%" stopColor={THEME.accentBlue} stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor={THEME.accentBlue} stopOpacity={0}/>
                 </linearGradient>
                 <linearGradient id="supplyGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#F5F5DC" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#F5F5DC" stopOpacity={0}/>
+                  <stop offset="5%" stopColor={THEME.accentPurple} stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor={THEME.accentPurple} stopOpacity={0}/>
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" opacity={0.5} />
+              <CartesianGrid strokeDasharray="3 3" stroke={THEME.surfaceAlt} opacity={0.5} />
               <XAxis 
                 dataKey="month" 
-                stroke="#666666" 
+                stroke={THEME.textSecondary} 
                 style={{ fontSize: 11 }}
-                tick={{ fill: '#666666' }}
+                tick={{ fill: THEME.textSecondary }}
               />
               <YAxis 
-                stroke="#666666" 
+                stroke={THEME.textSecondary} 
                 style={{ fontSize: 11 }}
                 label={{ value: 'Units', angle: -90, position: 'insideLeft', offset: 10 }}
               />
@@ -121,7 +122,7 @@ export default function EnhancedHousingChart({ summary }: EnhancedHousingChartPr
               />
               <ReferenceLine 
                 y={avgGap} 
-                stroke="#FF6B6B" 
+                stroke={THEME.danger} 
                 strokeDasharray="5 5" 
                 opacity={0.5}
               />
@@ -142,19 +143,19 @@ export default function EnhancedHousingChart({ summary }: EnhancedHousingChartPr
               <Line
                 type="monotone"
                 dataKey="demand"
-                stroke="#87CEEB"
+                stroke={THEME.accentBlue}
                 strokeWidth={3}
-                dot={{ fill: '#87CEEB', r: 5, strokeWidth: 2, stroke: '#FFFFFF' }}
-                activeDot={{ r: 7, strokeWidth: 2, stroke: '#FFFFFF' }}
+                dot={{ fill: THEME.accentBlue, r: 5, strokeWidth: 2, stroke: THEME.textPrimary }}
+                activeDot={{ r: 7, strokeWidth: 2, stroke: THEME.textPrimary }}
                 name="Demand"
               />
               <Line
                 type="monotone"
                 dataKey="supply"
-                stroke="#F5F5DC"
+                stroke={THEME.accentPurple}
                 strokeWidth={3}
-                dot={{ fill: '#F5F5DC', r: 5, strokeWidth: 2, stroke: '#FFFFFF' }}
-                activeDot={{ r: 7, strokeWidth: 2, stroke: '#FFFFFF' }}
+                dot={{ fill: THEME.accentPurple, r: 5, strokeWidth: 2, stroke: THEME.textPrimary }}
+                activeDot={{ r: 7, strokeWidth: 2, stroke: THEME.textPrimary }}
                 name="Supply"
               />
             </ComposedChart>
@@ -194,12 +195,12 @@ export default function EnhancedHousingChart({ summary }: EnhancedHousingChartPr
         <View style={styles.chartWrapperSmall}>
           <ResponsiveContainer width="100%" height={240}>
             <ScatterChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" opacity={0.5} />
+              <CartesianGrid strokeDasharray="3 3" stroke={THEME.surfaceAlt} opacity={0.5} />
               <XAxis
                 type="number"
                 dataKey="affordability"
                 name="Affordability Index"
-                stroke="#666666"
+                stroke={THEME.textSecondary}
                 style={{ fontSize: 11 }}
                 label={{ value: 'Affordability Index', position: 'insideBottom', offset: -5 }}
                 domain={[0, 100]}
@@ -208,7 +209,7 @@ export default function EnhancedHousingChart({ summary }: EnhancedHousingChartPr
                 type="number"
                 dataKey="demand"
                 name="Demand (units)"
-                stroke="#666666"
+                stroke={THEME.textSecondary}
                 style={{ fontSize: 11 }}
                 label={{ value: 'Demand (units)', angle: -90, position: 'insideLeft', offset: 10 }}
               />
@@ -220,7 +221,7 @@ export default function EnhancedHousingChart({ summary }: EnhancedHousingChartPr
               <Scatter
                 name="Housing Zones"
                 data={scatterData}
-                fill="#87CEEB"
+                fill={THEME.accentBlue}
               >
                 {scatterData.map((entry, index) => (
                   <Cell 
@@ -259,13 +260,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 4,
   },
   sectionSubtitle: {
     fontSize: 11,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
     marginBottom: 12,
     fontStyle: 'italic',
   },
@@ -278,11 +279,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   tooltipContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: THEME.surface,
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -293,12 +294,12 @@ const styles = StyleSheet.create({
   tooltipTitle: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 8,
   },
   tooltipDivider: {
     height: 1,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: THEME.surfaceAlt,
     marginVertical: 6,
   },
   tooltipRow: {
@@ -315,25 +316,25 @@ const styles = StyleSheet.create({
   tooltipLabel: {
     fontSize: 12,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
     flex: 1,
   },
   tooltipValue: {
     fontSize: 12,
     fontFamily: FONT_FAMILY.semiBold,
-    color: '#000000',
+    color: THEME.textPrimary,
   },
   demandColor: {
-    color: '#87CEEB',
+    color: THEME.accentBlue,
   },
   supplyColor: {
-    color: '#F5F5DC',
+    color: THEME.accentPurple,
   },
   criticalGap: {
-    color: '#DC3545',
+    color: THEME.danger,
   },
   positiveGap: {
-    color: '#28A745',
+    color: THEME.success,
   },
   metricsContainer: {
     flexDirection: 'row',
@@ -342,45 +343,45 @@ const styles = StyleSheet.create({
   },
   metricCard: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: THEME.surfaceAlt,
     alignItems: 'center',
   },
   metricLabel: {
     fontSize: 11,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
     marginBottom: 4,
     textAlign: 'center',
   },
   metricValue: {
     fontSize: 18,
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
     marginBottom: 2,
   },
   metricSubtext: {
     fontSize: 10,
     fontFamily: FONT_FAMILY.regular,
-    color: '#666666',
+    color: THEME.textSecondary,
     textAlign: 'center',
   },
   summaryContainer: {
     marginTop: 16,
     padding: 16,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: THEME.surface,
     borderRadius: 8,
     borderLeftWidth: 3,
-    borderLeftColor: '#87CEEB',
+    borderLeftColor: THEME.accentBlue,
   },
   summaryHeader: {
     marginBottom: 8,
   },
   aiTag: {
-    backgroundColor: '#87CEEB',
+    backgroundColor: THEME.accentBlue,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,
@@ -389,14 +390,14 @@ const styles = StyleSheet.create({
   aiTagText: {
     fontSize: 10,
     fontFamily: FONT_FAMILY.bold,
-    color: '#000000',
+    color: THEME.textPrimary,
     letterSpacing: 1,
   },
   summaryText: {
     fontSize: 14,
     fontFamily: FONT_FAMILY.regular,
     lineHeight: 21,
-    color: '#333333',
+    color: THEME.textSecondary,
   },
 });
 
